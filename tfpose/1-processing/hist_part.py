@@ -18,7 +18,8 @@ df_c = pd.read_pickle('../0-data/data_pickle/'+args.c)
 df_nc = pd.read_pickle('../0-data/data_pickle/'+args.nc)      
 
 # neckx, necky
-plt.rcParams['font.family'] = 'Times New Roman'
+plt.rc('text', useTex=True)
+plt.rcPagraphrams['font.family'] = 'Times New Roman'
 plt.rcParams.update({'font.size': 60})
 fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(25, 15)) 
 fig.tight_layout(pad=2)

@@ -26,14 +26,14 @@ if args.file:
 plt.rcParams['font.family'] = 'Times New Roman'
 plt.rcParams.update({'font.size': 70})
 fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(30, 25))      
-#axes[0][0].spines['left'].set_position(('outward', +10))
-#axes[0][0].spines['bottom'].set_position(('outward', +10))
 fig.tight_layout(pad=2)
 nbin = 50
-fig.suptitle('Distribution of Top / Mid\'s Standard Deviation', y=0.95)
+fig.suptitle('Distribution of $\sigma_{Top}$, $\sigma_{Mid}$', y=0.95)
 
 # label list
-la = ['Standard deviation of\ntop\'s x-coordinate', 'Standard deviation of\ntop\'s y-coordinate', 'Standard deviation of\nmid\'s x-coordinate', 'Standard deviation of\nmid\'s y-coordinate']
+#la = ['Standard deviation of\ntop\'s x-coordinate', 'Standard deviation of\ntop\'s y-coordinate', 'Standard deviation of\nmid\'s x-coordinate', 'Standard deviation of\nmid\'s y-coordinate']
+la = ['$\sigma_{Top}^X$', '$\sigma_{Top}^Y$', '$\sigma_{Mid}^X$', '$\sigma_{Mid}^Y$']
+
 
 # define concatenation function
 def concatData(data):
