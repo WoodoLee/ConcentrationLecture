@@ -1,5 +1,6 @@
 import pathlib
 import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
 import pandas as pd
 import seaborn as sns
 import tensorflow as tf
@@ -9,6 +10,7 @@ import argparse
 import numpy as np
 from sklearn.model_selection import StratifiedKFold, KFold
 from keras.callbacks import ModelCheckpoint, EarlyStopping
+from keras.layers import Dropout
 
 parser = argparse.ArgumentParser(description='for running DNN...')
 parser.add_argument('--file', type=str, required=True, help='name of file')
@@ -30,13 +32,16 @@ def build_dataset(cnt):
 
 def build_model():
     model = keras.Sequential([
-        layers.Dense(len(train_dataset.keys()), activation='relu', input_shape=[len(train_dataset.keys())]),
-        layers.Dense(16, activation = 'relu'),
+        #layers.Dense(len(train_dataset.keys()), activation='relu', input_shape=[len(train_dataset.keys())]),
+        layers.Dense(8, activation='relu', input_shape=[len(train_dataset.keys())]),
+        layers.Dense(8, activation = 'relu'),
         layers.Dense(1, activation='sigmoid')
     ])
     #keras.optimizers.RMSprop(0.1)
     keras.optimizers.Adam(lr=0.001)
-    model.compile(loss='binary_crossentropy', optimizer = 'adam', metrics = ['binary_crossentropy'])
+    #keras.optimizers.Adagrad(lr=0.001)
+    #keras.optimizers.Adadelta(lr=0.001)
+    model.compile(loss='binary_crossentropy', optimizer = 'Adam', metrics = ['binary_crossentropy'])
     #metrics = ['mae', 'mse','accuracy'])
     return model
 
@@ -72,10 +77,22 @@ def cal_accuracy(test_labels, test_predictions):
 def plot_history1(history):
     hist = pd.DataFrame(history.history)
     hist['epoch'] = history.epoch
+    '''
+    '''
+    #font for ieee
+    fontpath = '/usr/share/fonts/truetype/msttcorefonts/Times_New_Roman.ttf'
+    prop = fm.FontProperties(fname=fontpath)
+    plt.rcParams['font.family'] = prop.get_name()
+    plt.rcParams.update({'font.size':40})
+    
+
     plt.xlabel('Epoch')
     plt.ylabel('binary_crossentropy')
-    plt.scatter(hist['epoch'], hist['binary_crossentropy'], label='Train Error')
-    plt.scatter(hist['epoch'], hist['val_binary_crossentropy'], label = 'Val Error')
+    plt.scatter(hist['epoch'], hist['binary_crossentropy'], label='Train Error', c= 'blue', alpha=.5)
+    plt.scatter(hist['epoch'], hist['val_binary_crossentropy'], label = 'Validation Error', c='red',alpha=.5)
+    plt.grid(True)
+    plt.title('Model Training')
+    plt.ylabel('Binary Cross-entropy')
     plt.legend()
     plt.show()
 
@@ -148,7 +165,7 @@ for train_idx, val_idx in skf.split(X, y):
     print("accuracy: ",tmp_accuracy,"%")
 
     #save model
-    model.save('models/4R16R1S_'+str(i)+'.h5')
+    model.save('models/4R16R1Skjk_'+str(i)+'.h5')
 
     #extract pl_set to pickle
     pl_df = pd.DataFrame(pl_set, columns=['prediction','label'])
