@@ -7,8 +7,8 @@ from sklearn.preprocessing import StandardScaler
 
 # parser
 parser = argparse.ArgumentParser(description='for preprocessing tfpose data...')
-parser.add_argument('--c', type=str, help='raw (pickle)data path and name with ".pkl"')
-parser.add_argument('--nc', type=str, help='raw (pickle)data path and name with ".pkl"')
+parser.add_argument('--c', type=str, help='prepared (pickle)data path and name with ".pkl"')
+parser.add_argument('--nc', type=str, help='prepared (pickle)data path and name with ".pkl"')
 parser.add_argument('--scaler', type=int, default=0, help='0-nonscaler 1-scaler')
 parser.add_argument('--file', type=str, help='merged data')
 args = parser.parse_args()
@@ -22,13 +22,21 @@ if args.file:
     df_c = df[df['label']==1]
     df_nc = df[df['label']==0]
 
+
+plt.rcParams.update({'font.size': 15})      ###
+plt.rc('text', usetex=True)
+plt.rc('font', family='serif')
+# plt.figure(1, dpi=300)
+
+
+
 # topX, topY, midX, midY
-plt.rcParams['font.family'] = 'Times New Roman'
-plt.rcParams.update({'font.size': 70})
-fig, axes = plt.subplots(nrows=2, ncols=2, figsize=(30, 25))      
-fig.tight_layout(pad=2)
+'''plt.rcParams['font.family'] = 'Times New Roman'
+plt.rcParams.update({'font.size': 70})'''
+fig, axes = plt.subplots(nrows=2, ncols=2, dpi=300)          # , figsize=(30, 25)
+fig.tight_layout(pad=1.4)
 nbin = 50
-fig.suptitle('Distribution of $\sigma_{Top}$, $\sigma_{Mid}$', y=0.95)
+fig.suptitle('Distribution of $\sigma_{Top}$, $\sigma_{Mid}$', y=0.99)
 
 # label list
 #la = ['Standard deviation of\ntop\'s x-coordinate', 'Standard deviation of\ntop\'s y-coordinate', 'Standard deviation of\nmid\'s x-coordinate', 'Standard deviation of\nmid\'s y-coordinate']
@@ -45,20 +53,29 @@ def concatData(data):
 
 # define drawing std 1-D histogram function
 def drawStdHist(data, row, rangemin,rangemax):
-    # dataT, dataM, dataTotal = concatData(data)    
+    if row == 1:    # concentrate
+        c = 'red'      
+        l = 'High'
+    else:           # not concentrate
+        c = 'blue'            
+        l = 'Low'
 
-    if row == 1: c = 'red'      # concentrate
-    else: c = 'blue'            # not concentrate
     idx = 0
     for i in range(2):         
         for j in range(2):
-            axes[i][j].hist(data.iloc[:, idx], range=(rangemin, rangemax), bins=nbin, alpha=0.5, color=c, label='label: ' + str(row))
-        #x2, p2, mu2, std1 = funcFitGaus(data.iloc[:, i])
-        #axes[row, i].plot(x2, p2, 'r', linewidth=2)
+            n, bins, patches = axes[i][j].hist(data.iloc[:, idx], range=(rangemin, rangemax), bins=nbin, alpha=0.5, color=c, label=l)
             axes[i][j].legend()
+            
+            if idx <= 1:        # top
+                major_ticks = np.arange(0, 501, 250)
+            else:               # body
+                major_ticks = np.arange(0, 751, 250)
+            
+            axes[i][j].set_yticks(major_ticks)
             axes[i][j].set_xlabel(la[idx])
             axes[i][j].set_ylabel('Count')
-            axes[i][j].grid(True)
+            axes[i][j].grid(True, alpha=0.5)
+
             idx += 1
     
 
@@ -89,8 +106,8 @@ print(df_c.describe())
 print(df_nc.describe())
 
 # draw
-drawStdHist(df_c, 1, -0.001, 0.02)
-drawStdHist(df_nc, 0, -0.001, 0.02)
+drawStdHist(df_c, 1, -0.001, 0.025)
+drawStdHist(df_nc, 0, -0.001, 0.025)
 
 # plt.show()
 plt.savefig('kjk_stopmove_50.png')

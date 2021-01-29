@@ -18,12 +18,17 @@ df_c = pd.read_pickle('../0-data/data_pickle/'+args.c)
 df_nc = pd.read_pickle('../0-data/data_pickle/'+args.nc)      
 
 # neckx, necky
-plt.rc('text', useTex=True)
+'''plt.rc('text', useTex=True)
 plt.rcPagraphrams['font.family'] = 'Times New Roman'
 plt.rcParams.update({'font.size': 60})
-fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(25, 15)) 
+'''
+plt.rcParams.update({'font.size': 15})
+plt.rc('text', usetex=True)
+plt.rc('font', family='serif')
+
+fig, axes = plt.subplots(nrows=1, ncols=2, dpi=300) 
 fig.tight_layout(pad=2)
-fig.suptitle('Distribution of $\sigma_{Neck}$', y=0.93)
+fig.suptitle('Distribution of $\sigma_{Neck}$', y=0.95)
 nbin = 50
 
 part = 'Nec'
@@ -59,10 +64,14 @@ def drawStdHist(dataX, dataY, row, rangemin, rangemax):
             data = dataY
             label = '$\sigma_{Neck}^Y$'
         
-        if row==1: c='red'      # concentration
-        else: c='blue'          # not
+        if row==1:      # concentration
+            c='red'      
+            l = 'High'
+        else:           # not
+            c='blue' 
+            l = 'Low'         
 
-        axes[i].hist(data, range=(rangemin, rangemax), bins=nbin, color=c, alpha=0.5, label='label: ' + str(row))
+        axes[i].hist(data, range=(rangemin, rangemax), bins=nbin, color=c, alpha=0.5, label=l)
         axes[i].legend()
         axes[i].set_xlabel(label)
         axes[i].set_ylabel('Count')

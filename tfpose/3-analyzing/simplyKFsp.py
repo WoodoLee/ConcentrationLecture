@@ -12,7 +12,7 @@ from scipy.interpolate import make_interp_spline, BSpline
 
 # plt.rcParams['font.family'] = 'Times New Roman'
 
-plt.rcParams.update({'font.size': 11})
+plt.rcParams.update({'font.size': 11})      ###
 
 # use LaTeX fonts in the plot
 plt.rc('text', usetex=True)
@@ -124,7 +124,7 @@ m0, e0, tNpTot0 = funcKFsimple(dataPath0)
 tNpTot1 = tNpTot1 * 2.5 / 60
 tNpTot0 = tNpTot0 * 2.5 / 60
 
-plt.figure(1, figsize=(5, 4), dpi=300)
+plt.figure(1, figsize=(5, 4), dpi=300)              ###
 
 plt.plot(tNpTot1, m1, 'bo', label='Measurements 1 ', markersize=2 )
 plt.plot(tNpTot1, e1, 'ro', label='Estimations 1 ' , markersize=2 )
