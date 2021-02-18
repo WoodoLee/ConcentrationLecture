@@ -22,16 +22,18 @@ df = pd.read_pickle('../0-data/data_pickle/' + args.file)      # x, y, score
 body = ["Nos", "Nec", "Rsh", "Rel", "Rwr", "Lsh", "Lel", "Lwr", "Rey", "Ley", "Rea", "Lea"]
 
 for i in body:
-    XY = pd.concat([df[i + '_X'], df[i + '_Y'], df[i + '_Score']], axis=1)
+    XY = pd.concat([df[i + '_X'][100:150], df[i + '_Y'][100:150], df[i + '_Score'][100:150]], axis=1)
+    # XY = pd.concat([df[i + '_X'][500:8500], df[i + '_Y'][500:8500], df[i + '_Score'][500:8500]], axis=1)
     XY.columns = ['X', 'Y', 'Score']
     histo = histo.append(XY)
 
 histo.Y = - histo.Y + 1
 
+print(histo)
+print(histo.info())
+
 histo = histo[histo.X != 0]
 histo = histo[histo.Y != 0]
-
-print(histo)
 
 # fig.show()
 nbins=30
@@ -39,7 +41,7 @@ plt.figure(figsize=(11, 8))
 plt.hist2d(histo['X'], histo['Y'], range=[[0, 1], [0, 1]], bins=nbins)
 
 cb = plt.colorbar()
-cb.set_label('Number of entries')
+cb.set_label('Number of Entries')
 
 ax = plt.gca()
 #ax.axes.xaxis.set_ticks([])
@@ -51,9 +53,13 @@ plt.ylabel('Y-axis')
 
 if args.label:
     plt.title("High-Concentration")
-    plt.savefig("kpg_1")
+    # plt.savefig("kpg_1_50")
+    # plt.show()
 else:
     plt.title("Low-Concentration")
-    plt.savefig("kpg_0")
+    # plt.savefig("kpg_0_50")
+    # plt.show()
+
+
 
 
