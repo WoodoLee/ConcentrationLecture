@@ -46,11 +46,9 @@ save informations to pickle
 $ python3 preprocessing.py --rawroot [raw_file_name]
 ```
 In preprocessing.py...
-- For each column of raw pickle data, drop missing data, and apply min-max normalize.
-- Some body parts are concatenated to create a top and mid-data frame.
 - top: Nos, Lea, Ley, Rea, Rey
 - mid: Nec, Lel, Lsh, Rel, Rsh
-- Calculate the variations of the top and mid part per every 100 frames and add labels.
+- Calculate the variations of the top and mid part per every 50 frames and add labels.
 
 
 
