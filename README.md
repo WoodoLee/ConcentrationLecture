@@ -1,7 +1,7 @@
 # Deep Learning on Human Concentration 
 
 ## Overview
-![Overview](./images/overview.jpeg)
+![Overview](./tfpose/paper-image/overview.png)
 figure 1. project overview
 
 ### Contributors
