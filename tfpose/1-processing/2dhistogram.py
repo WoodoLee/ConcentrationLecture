@@ -22,8 +22,8 @@ df = pd.read_pickle('../0-data/data_pickle/' + args.file)      # x, y, score
 body = ["Nos", "Nec", "Rsh", "Rel", "Rwr", "Lsh", "Lel", "Lwr", "Rey", "Ley", "Rea", "Lea"]
 
 for i in body:
-    XY = pd.concat([df[i + '_X'][100:150], df[i + '_Y'][100:150], df[i + '_Score'][100:150]], axis=1)
-    # XY = pd.concat([df[i + '_X'][500:8500], df[i + '_Y'][500:8500], df[i + '_Score'][500:8500]], axis=1)
+    #XY = pd.concat([df[i + '_X'][100:150], df[i + '_Y'][100:150], df[i + '_Score'][100:150]], axis=1)
+    XY = pd.concat([df[i + '_X'][500:8500], df[i + '_Y'][500:8500], df[i + '_Score'][500:8500]], axis=1)
     XY.columns = ['X', 'Y', 'Score']
     histo = histo.append(XY)
 
@@ -49,16 +49,16 @@ ax = plt.gca()
 
 plt.xlabel('X-axis')
 plt.ylabel('Y-axis')
-#plt.show()
+plt.show()
 
-if args.label:
+'''if args.label:
     plt.title("High-Concentration")
     # plt.savefig("kpg_1_50")
     # plt.show()
 else:
     plt.title("Low-Concentration")
     # plt.savefig("kpg_0_50")
-    # plt.show()
+    # plt.show()'''
 
 
 

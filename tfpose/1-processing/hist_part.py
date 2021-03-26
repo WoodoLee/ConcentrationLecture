@@ -22,7 +22,7 @@ df_nc = pd.read_pickle('../0-data/data_pickle/'+args.nc)
 plt.rcPagraphrams['font.family'] = 'Times New Roman'
 plt.rcParams.update({'font.size': 60})
 '''
-plt.rcParams.update({'font.size': 15})
+plt.rcParams.update({'font.size': 25})
 plt.rc('text', usetex=True)
 plt.rc('font', family='serif')
 
