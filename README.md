@@ -1,7 +1,7 @@
 # Deep Learning on Human Concentration 
 
 ## Overview
-![Overview](./images/overview.jpeg)
+![Overview](./tfpose/paper-image/overview.png)
 figure 1. project overview
 
 ### Contributors
@@ -46,11 +46,9 @@ save informations to pickle
 $ python3 preprocessing.py --rawroot [raw_file_name]
 ```
 In preprocessing.py...
-- For each column of raw pickle data, drop missing data, and apply min-max normalize.
-- Some body parts are concatenated to create a top and mid-data frame.
 - top: Nos, Lea, Ley, Rea, Rey
 - mid: Nec, Lel, Lsh, Rel, Rsh
-- Calculate the variations of the top and mid part per every 100 frames and add labels.
+- Calculate the variations of the top and mid part per every 50 frames and add labels.
 
 
 
@@ -66,9 +64,9 @@ merge dataset and shuffle to prevent biased labeled value
 ```sh
 $ python3 run_dnn.py --file [name of pickle] --plot [graph_idx] --size [dataset_size] --epoch [number of epoch] 
 ```
-- 1st layer: dimension:11, activation: relu
-- 2nd layer: dimension:32, activation: relu
-- 3rd layer: dimension:1, activation: sigmoid
+- 1st hidden layer: dimension:8, activation: relu
+- 2nd hidden layer: dimension:8, activation: relu
+- output layer: sigmoid
 
 
 
